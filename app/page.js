@@ -28,7 +28,7 @@ export default function LandingPage() {
           {/* Auth + CTA */}
           <div className="flex items-center gap-3">
             {isLoaded && !isSignedIn && (
-              <SignInButton mode="modal" fallbackRedirectUrl="/dashboard">
+              <SignInButton fallbackRedirectUrl="/dashboard">
                 <button className="flex items-center gap-1.5 text-primary border border-primary/30 font-bold text-sm px-4 py-2 rounded-full hover:bg-primary/10 transition-all duration-200">
                   <span className="material-symbols-outlined text-base">login</span>
                   دخول
@@ -130,7 +130,7 @@ export default function LandingPage() {
         {/* CTA Buttons */}
         <div className="flex flex-col gap-3">
           <Link href="/dashboard" className="block w-full py-4 rounded-2xl bg-primary text-white font-bold text-base text-center shadow-xl shadow-primary/30 hover:scale-[1.02] hover:shadow-primary/50 transition-all">
-            ابدأ المذاكرة الآن 🚀
+            ابدأ الاستعداد للامتحان 🚀
           </Link>
           <Link href="/leaderboard" className="block w-full py-4 rounded-2xl glass-card text-on-background font-bold text-base text-center hover:border-primary/30 transition-all">
             🏆 لوحة المتفوقين

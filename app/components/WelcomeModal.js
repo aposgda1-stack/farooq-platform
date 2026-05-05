@@ -80,10 +80,9 @@ export default function WelcomeModal() {
 
           {/* Actions */}
           <div className="relative z-10 space-y-3 pb-8">
-            {/* Primary: Sign In via Clerk modal */}
-            <SignInButton mode="modal" fallbackRedirectUrl="/dashboard">
+            {/* Primary: Sign In */}
+            <SignInButton fallbackRedirectUrl="/dashboard">
               <button
-                onClick={handleClose}
                 className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl font-black text-sm text-white shadow-xl shadow-primary/25 hover:scale-[1.02] active:scale-95 transition-all"
                 style={{ background: 'linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%)' }}
               >

@@ -180,20 +180,20 @@ export default function QuizClient({ chapterId, chapterTitle, questions, mode })
           <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce">
             <span className="material-symbols-outlined text-primary text-5xl icon-filled">stars</span>
           </div>
-          <h2 className="text-4xl font-black mb-2">
-            {percentage === 100 ? `أسطورة يا بطل! 🎯` : 
-             percentage >= 90 ? `عبقري يا بطل! 🏆` :
-             percentage >= 70 ? `عاش يا بطل! 🌹` :
-             percentage >= 50 ? `خطوة ممتازة يا بطل 👍` :
-             `مشرفنا يا بطل، كمل وهتوصل! 💪`}
+          <h2 className="text-4xl font-black mb-2 tracking-wide font-lexend text-white" dir="ltr">
+            {percentage === 100 ? `Legendary! 🎯` : 
+             percentage >= 90 ? `Genius! 🏆` :
+             percentage >= 70 ? `Great Job! 🌹` :
+             percentage >= 50 ? `Excellent Step! 👍` :
+             `Keep Going! 💪`}
           </h2>
           <h3 className="text-xl font-bold mb-2">
             اكتمل {mode === 'exam' ? 'الامتحان' : 'التدريب'} الخاص بـ "{chapterTitle}"
           </h3>
-          <p className="opacity-70 mb-10 text-sm">
-            {percentage === 100 ? 'إنجاز رائع ومبهر، قفلت الفصل بالكامل!' : 
-             percentage >= 90 ? 'أداء ممتاز، فاضل تكة بسيطة ع التقفيل.' :
-             'استمر في المحاولة، كل غلطة بتعلمك أكتر.'}
+          <p className="opacity-70 mb-10 text-sm font-lexend" dir="ltr">
+            {percentage === 100 ? 'Incredible performance, perfect score!' : 
+             percentage >= 90 ? 'Outstanding! Just a little bit left to perfection.' :
+             'Keep trying, mistakes are proof that you are trying.'}
           </p>
 
           <div className="grid grid-cols-2 gap-4 mb-10">

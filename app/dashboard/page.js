@@ -38,7 +38,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
               {!isSignedIn && (
-                <SignInButton mode="modal" fallbackRedirectUrl="/dashboard">
+                <SignInButton fallbackRedirectUrl="/dashboard">
                   <button className="flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/30 font-bold text-xs px-3 py-1.5 rounded-full hover:bg-primary/20 transition-all">
                     <span className="material-symbols-outlined text-sm">login</span>
                     دخول
@@ -51,7 +51,12 @@ export default function Dashboard() {
             </div>
             <div className="leading-none text-right">
               <p className="font-bold text-sm text-on-background">أهلاً {user?.firstName || 'يا بطل'} 🎓</p>
-              <p className="text-[10px] text-on-surface-variant mt-1">جاهز تلم المنهج؟</p>
+              {isSignedIn && stats && (
+                <p className="text-xs font-bold text-primary mt-1">{stats.totalPoints} <span className="text-[10px] text-on-surface-variant font-normal">نقطة</span></p>
+              )}
+              {!isSignedIn && (
+                <p className="text-[10px] text-on-surface-variant mt-1">جاهز تلم المنهج؟</p>
+              )}
             </div>
           </div>
           {/* Brand */}
