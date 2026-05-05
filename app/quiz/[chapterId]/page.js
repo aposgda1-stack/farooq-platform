@@ -1,21 +1,34 @@
 import QuizClient from './QuizClient';
 import Link from 'next/link';
 
+// Static mapping for Vercel bundling
+const questionFiles = {
+  '1': () => import('@/public/data/chapter-01-questions.json'),
+  '2': () => import('@/public/data/chapter-02-questions.json'),
+  '3': () => import('@/public/data/chapter-03-questions.json'),
+  '4': () => import('@/public/data/chapter-04-questions.json'),
+  '5': () => import('@/public/data/chapter-05-questions.json'),
+  '6': () => import('@/public/data/chapter-06-questions.json'),
+  '7': () => import('@/public/data/chapter-07-questions.json'),
+  '8': () => import('@/public/data/chapter-08-questions.json'),
+  '9': () => import('@/public/data/chapter-09-questions.json'),
+  '10': () => import('@/public/data/chapter-10-questions.json'),
+  '11': () => import('@/public/data/chapter-11-questions.json'),
+  '13': () => import('@/public/data/chapter-13-questions.json'),
+};
+
 export default async function QuizPage({ params, searchParams }) {
   const chapterId = params.chapterId;
   const mode = searchParams.mode || 'practice';
 
   try {
-    // Fetch chapter meta to get title using dynamic import for Vercel compatibility
     const metaContents = (await import('@/public/data/chapters-meta.json')).default;
     const chapters = Array.isArray(metaContents) ? metaContents : (metaContents.chapters || []);
     const chapterMeta = chapters.find(c => c.id.toString() === chapterId.toString());
 
-    if (!chapterMeta) throw new Error('Chapter not found');
+    if (!chapterMeta || !questionFiles[chapterId]) throw new Error('Chapter not found');
 
-    // Fetch chapter questions using dynamic import so Webpack bundles them
-    const paddedId = chapterId.toString().padStart(2, '0');
-    const questions = (await import(`@/public/data/chapter-${paddedId}-questions.json`)).default;
+    const questions = (await questionFiles[chapterId]()).default;
 
     return (
       <QuizClient 
