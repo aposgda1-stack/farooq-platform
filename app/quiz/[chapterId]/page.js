@@ -1,28 +1,21 @@
-import { promises as fs } from 'fs';
-import path from 'path';
 import QuizClient from './QuizClient';
+import Link from 'next/link';
 
 export default async function QuizPage({ params, searchParams }) {
   const chapterId = params.chapterId;
   const mode = searchParams.mode || 'practice';
 
   try {
-    // Fetch chapter meta to get title
-    const metaPath = path.join(process.cwd(), 'public', 'data', 'chapters-meta.json');
-    const metaContents = await fs.readFile(metaPath, 'utf8');
-    const parsedData = JSON.parse(metaContents);
-    const chapters = Array.isArray(parsedData) ? parsedData : (parsedData.chapters || []);
+    // Fetch chapter meta to get title using dynamic import for Vercel compatibility
+    const metaContents = (await import('@/public/data/chapters-meta.json')).default;
+    const chapters = Array.isArray(metaContents) ? metaContents : (metaContents.chapters || []);
     const chapterMeta = chapters.find(c => c.id.toString() === chapterId.toString());
 
     if (!chapterMeta) throw new Error('Chapter not found');
 
-    // Fetch chapter questions using internal logic (since we are in server component, we can use fs or fetch from self)
-    // To respect point 3, we should ideally use the API, but server-to-server fetch on localhost during build can be tricky.
-    // So we will use the FS logic but with better error handling.
+    // Fetch chapter questions using dynamic import so Webpack bundles them
     const paddedId = chapterId.toString().padStart(2, '0');
-    const qPath = path.join(process.cwd(), 'public', 'data', `chapter-${paddedId}-questions.json`);
-    const qContents = await fs.readFile(qPath, 'utf8');
-    const questions = JSON.parse(qContents);
+    const questions = (await import(`@/public/data/chapter-${paddedId}-questions.json`)).default;
 
     return (
       <QuizClient 

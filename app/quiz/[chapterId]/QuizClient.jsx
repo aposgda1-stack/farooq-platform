@@ -3,10 +3,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useUserStats } from '@/lib/useUserStats';
-import { useUser } from '@clerk/nextjs';
 
 export default function QuizClient({ chapterId, chapterTitle, questions, mode }) {
-  const { user } = useUser();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isAnswerRevealed, setIsAnswerRevealed] = useState(false);
@@ -183,11 +181,11 @@ export default function QuizClient({ chapterId, chapterTitle, questions, mode })
             <span className="material-symbols-outlined text-primary text-5xl icon-filled">stars</span>
           </div>
           <h2 className="text-4xl font-black mb-2">
-            {percentage === 100 ? `أسطورة يا ${user?.firstName || 'بطل'}! 🎯` : 
-             percentage >= 90 ? `عبقري يا ${user?.firstName || 'بطل'}! 🏆` :
-             percentage >= 70 ? `عاش يا ${user?.firstName || 'بطل'}! 🌹` :
-             percentage >= 50 ? `خطوة ممتازة يا ${user?.firstName || 'بطل'} 👍` :
-             `مشرفنا يا ${user?.firstName || 'بطل'}، كمل وهتوصل! 💪`}
+            {percentage === 100 ? `أسطورة يا بطل! 🎯` : 
+             percentage >= 90 ? `عبقري يا بطل! 🏆` :
+             percentage >= 70 ? `عاش يا بطل! 🌹` :
+             percentage >= 50 ? `خطوة ممتازة يا بطل 👍` :
+             `مشرفنا يا بطل، كمل وهتوصل! 💪`}
           </h2>
           <h3 className="text-xl font-bold mb-2">
             اكتمل {mode === 'exam' ? 'الامتحان' : 'التدريب'} الخاص بـ "{chapterTitle}"

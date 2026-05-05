@@ -3,10 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useUserStats, BADGES } from '@/lib/useUserStats';
-import { useUser } from '@clerk/nextjs';
 
 export default function Dashboard() {
-  const { user, isLoaded: isUserLoaded } = useUser();
   const { stats, isLoaded: isStatsLoaded } = useUserStats();
   const [topStudents, setTopStudents] = useState([]);
 
@@ -19,7 +17,7 @@ export default function Dashboard() {
       .catch(() => {});
   }, []);
 
-  if (!isStatsLoaded || !isUserLoaded) return (
+  if (!isStatsLoaded) return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4">
       <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
       <p className="text-on-surface-variant text-sm">جاري التحميل...</p>
@@ -39,14 +37,14 @@ export default function Dashboard() {
           <div className="flex items-center gap-3">
             <div className="relative">
               <img
-                src={user?.imageUrl}
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=student"
                 alt="Profile"
-                className="w-9 h-9 rounded-2xl border-2 border-primary/30 object-cover"
+                className="w-9 h-9 rounded-2xl border-2 border-primary/30 object-cover bg-primary/10"
               />
               <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-success border-2 border-background rounded-full" />
             </div>
             <div className="leading-none">
-              <p className="font-bold text-sm text-on-background">أهلاً يا {user?.firstName || 'بطل'} 🌹</p>
+              <p className="font-bold text-sm text-on-background">أهلاً يا بطل 🎓</p>
               <p className="text-[10px] text-on-surface-variant mt-1">جاهز تلم المنهج؟</p>
             </div>
           </div>
@@ -110,7 +108,7 @@ export default function Dashboard() {
             </div>
             <div className="space-y-3">
               {topStudents.map((s, i) => (
-                <div key={i} className={`flex items-center gap-3 p-3 rounded-xl ${s.email === user?.primaryEmailAddress?.emailAddress ? 'bg-primary/15 border border-primary/30' : 'bg-surface-container/50'}`}>
+                <div key={i} className={`flex items-center gap-3 p-3 rounded-xl bg-surface-container/50`}>
                   <span className="text-lg w-6 text-center shrink-0">
                     {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i+1}`}
                   </span>

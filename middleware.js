@@ -1,22 +1,6 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-
-// FIX #9: Protect authenticated routes
-const isProtectedRoute = createRouteMatcher([
-  '/dashboard(.*)',
-  '/final-exam(.*)',
-  '/quiz(.*)',
-  '/leaderboard(.*)',
-  '/review(.*)',
-  '/achievements(.*)',
-  '/speed(.*)',
-  '/random-exam(.*)',
-]);
-
-export default clerkMiddleware((auth, req) => {
-  if (isProtectedRoute(req)) {
-    auth.protect();
-  }
-});
+export default function middleware(req) {
+  // Authentication removed, open platform
+}
 
 export const config = {
   matcher: [

@@ -1,11 +1,7 @@
 import Link from 'next/link';
-import { promises as fs } from 'fs';
-import path from 'path';
 
 export default async function Chapters() {
-  const dataFilePath = path.join(process.cwd(), 'public', 'data', 'chapters-meta.json');
-  const fileContents = await fs.readFile(dataFilePath, 'utf8');
-  const parsedData = JSON.parse(fileContents);
+  const parsedData = (await import('@/public/data/chapters-meta.json')).default;
   const chapters = Array.isArray(parsedData) ? parsedData : (parsedData.chapters || []);
   const activeChapters = chapters.filter(c => c.included !== false);
 

@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useUserStats } from '@/lib/useUserStats';
-import { useUser } from '@clerk/nextjs';
 
 // Fisher-Yates Seeded Shuffle
 function seededShuffle(array, seed) {
@@ -25,7 +24,6 @@ function seededShuffle(array, seed) {
 }
 
 export default function FinalExamClient({ pool = [] }) {
-  const { user, isLoaded: isUserLoaded } = useUser();
   const [isRestoring, setIsRestoring] = useState(true);
   const [hasStarted, setHasStarted] = useState(false);
   const [version, setVersion] = useState('A');
@@ -139,10 +137,9 @@ export default function FinalExamClient({ pool = [] }) {
   const syncToMongo = async (finalResults) => {
     setIsSyncing(true);
     try {
-      // Use real user data from Clerk
-      const userEmail = user?.primaryEmailAddress?.emailAddress || 'anonymous@example.com';
-      const userName = user?.fullName || 'طالب مجهول';
-      const userId = user?.id || 'unknown_id';
+      const userEmail = 'anonymous@example.com';
+      const userName = 'طالب مجهول';
+      const userId = 'local_user';
 
       await fetch('/api/sync-progress', {
         method: 'POST',
@@ -215,7 +212,7 @@ export default function FinalExamClient({ pool = [] }) {
       if (finalScore >= 90) awardBadge('excellent');
       if (finalScore === 100) awardBadge('perfect');
     }
-  }, [questions, answers, isLoaded, addPoints, recordActivity, awardBadge, version, user]);
+  }, [questions, answers, isLoaded, addPoints, recordActivity, awardBadge, version]);
 
   // FIX #3: Keep ref updated so timer always calls fresh submitExam
   useEffect(() => {
@@ -240,14 +237,14 @@ export default function FinalExamClient({ pool = [] }) {
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
-  if (isRestoring || !isUserLoaded) return <div className="min-h-screen bg-[#020617] flex items-center justify-center"><div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>;
+  if (isRestoring) return <div className="min-h-screen bg-[#020617] flex items-center justify-center"><div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>;
 
   if (!hasStarted) {
     return (
       <div className="min-h-screen bg-[#020617] text-white flex flex-col items-center justify-center p-6">
         <div className="max-w-xl w-full p-10 rounded-[40px] bg-white/5 border border-white/10 backdrop-blur-xl text-center shadow-2xl">
           <span className="material-symbols-outlined text-7xl text-primary mb-6 animate-bounce">verified_user</span>
-          <h1 className="text-4xl font-bold mb-4">أهلاً يا {user?.firstName || 'بطل'}، جاهز للتحدي؟</h1>
+          <h1 className="text-4xl font-bold mb-4">أهلاً يا بطل، جاهز للتحدي؟</h1>
           <p className="text-white/60 mb-10 text-lg leading-relaxed">
             الامتحان ده شامل وهيقيم مستواك الفعلي. ركز كويس عشان تتصدر لوحة المتفوقين!
           </p>
@@ -271,7 +268,7 @@ export default function FinalExamClient({ pool = [] }) {
                <div className={`absolute top-0 inset-x-0 h-2 ${results.score >= 50 ? 'bg-success' : 'bg-error'}`}></div>
                <h2 className="text-7xl font-bold mb-4">{results.score}%</h2>
                <h3 className="text-3xl font-bold mb-2">
-                 {results.score >= 85 ? `عاش يا ${user?.firstName || 'بطل'}! 🏆` : results.score >= 50 ? `أداء جيد يا ${user?.firstName || 'بطل'} 👍` : `تقدر تعوض يا ${user?.firstName || 'بطل'} 💪`}
+                 {results.score >= 85 ? `عاش يا بطل! 🏆` : results.score >= 50 ? `أداء جيد يا بطل 👍` : `تقدر تعوض يا بطل 💪`}
                </h3>
                <p className="text-xl opacity-60 mb-8">
                  {isSyncing ? "جاري تسجيل نتيجتك..." : "تم حفظ نتيجتك بنجاح!"}

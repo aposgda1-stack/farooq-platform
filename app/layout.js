@@ -1,4 +1,4 @@
-import { ClerkProvider } from '@clerk/nextjs'
+import './globals.css'
 import './globals.css'
 
 export const metadata = {
@@ -16,8 +16,7 @@ export const viewport = {
 }
 
 export default function RootLayout({ children }) {
-  return (
-    <ClerkProvider>
+    <>
       <html lang="ar" dir="rtl" className="dark">
         <head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,6 +28,6 @@ export default function RootLayout({ children }) {
           {children}
         </body>
       </html>
-    </ClerkProvider>
+    </>
   )
 }
