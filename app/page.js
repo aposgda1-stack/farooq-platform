@@ -1,8 +1,9 @@
 'use client';
 import Link from 'next/link';
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
+import { SignInButton, UserButton, useUser } from '@clerk/nextjs';
 
 export default function LandingPage() {
+  const { isSignedIn, isLoaded } = useUser();
   const whatsappNumber = '201015960695';
   const whatsappMessage = encodeURIComponent('مرحباً 👋 وصلت من منصة الفروق الفردية، محتاج مساعدة في...');
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
@@ -26,17 +27,17 @@ export default function LandingPage() {
           </div>
           {/* Auth + CTA */}
           <div className="flex items-center gap-3">
-            <SignedOut>
+            {isLoaded && !isSignedIn && (
               <SignInButton mode="modal" fallbackRedirectUrl="/dashboard">
                 <button className="flex items-center gap-1.5 text-primary border border-primary/30 font-bold text-sm px-4 py-2 rounded-full hover:bg-primary/10 transition-all duration-200">
                   <span className="material-symbols-outlined text-base">login</span>
                   دخول
                 </button>
               </SignInButton>
-            </SignedOut>
-            <SignedIn>
+            )}
+            {isLoaded && isSignedIn && (
               <UserButton appearance={{ elements: { avatarBox: 'w-8 h-8' } }} />
-            </SignedIn>
+            )}
             <Link
               href="/dashboard"
               className="flex items-center gap-2 bg-primary text-white font-bold text-sm px-5 py-2.5 rounded-full shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105 transition-all duration-200"

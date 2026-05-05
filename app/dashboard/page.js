@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useUserStats, BADGES } from '@/lib/useUserStats';
-import { useUser, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
+import { useUser, SignInButton, UserButton } from '@clerk/nextjs';
 
 export default function Dashboard() {
-  const { user } = useUser();
+  const { user, isSignedIn, isLoaded: isAuthLoaded } = useUser();
   const { stats, isLoaded: isStatsLoaded } = useUserStats();
   const [topStudents, setTopStudents] = useState([]);
 
@@ -19,7 +19,7 @@ export default function Dashboard() {
       .catch(() => {});
   }, []);
 
-  if (!isStatsLoaded) return (
+  if (!isStatsLoaded || !isAuthLoaded) return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4">
       <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
       <p className="text-on-surface-variant text-sm">جاري التحميل...</p>
@@ -37,17 +37,17 @@ export default function Dashboard() {
         <div className="flex flex-row-reverse justify-between items-center px-5 h-16 max-w-3xl mx-auto">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <SignedOut>
+              {!isSignedIn && (
                 <SignInButton mode="modal" fallbackRedirectUrl="/dashboard">
                   <button className="flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/30 font-bold text-xs px-3 py-1.5 rounded-full hover:bg-primary/20 transition-all">
                     <span className="material-symbols-outlined text-sm">login</span>
                     دخول
                   </button>
                 </SignInButton>
-              </SignedOut>
-              <SignedIn>
+              )}
+              {isSignedIn && (
                 <UserButton appearance={{ elements: { avatarBox: "w-9 h-9 border-2 border-primary/30 rounded-2xl" } }} />
-              </SignedIn>
+              )}
             </div>
             <div className="leading-none text-right">
               <p className="font-bold text-sm text-on-background">أهلاً {user?.firstName || 'يا بطل'} 🎓</p>
