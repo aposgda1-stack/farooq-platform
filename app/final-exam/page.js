@@ -1,69 +1,48 @@
-import { promises as fs } from 'fs';
-import path from 'path';
 import FinalExamClient from './FinalExamClient';
 
-export const dynamic = 'force-dynamic';
-
-// FIX #4: Add TTL to cache (10 minutes) so it refreshes properly
-let globalPoolCache = null;
-let cacheTimestamp = 0;
-const CACHE_TTL_MS = 10 * 60 * 1000;
-
-async function getQuestionsPool() {
-  const now = Date.now();
-  if (globalPoolCache && (now - cacheTimestamp) < CACHE_TTL_MS) {
-    return globalPoolCache;
-  }
-
-  const dataDir = path.join(process.cwd(), 'public', 'data');
-  const metaPath = path.join(dataDir, 'chapters-meta.json');
-  const metaContent = await fs.readFile(metaPath, 'utf8');
-  const parsedData = JSON.parse(metaContent);
-  const chapters = Array.isArray(parsedData) ? parsedData : (parsedData.chapters || []);
-
-  const pool = {};
-
-  for (const chapter of chapters) {
-    if (chapter.included === false) continue;
-    const paddedNum = chapter.id < 10 ? `0${chapter.id}` : `${chapter.id}`;
-    const questionsPath = path.join(dataDir, `chapter-${paddedNum}-questions.json`);
-
-    try {
-      const fileContent = await fs.readFile(questionsPath, 'utf8');
-      const questions = JSON.parse(fileContent);
-      pool[chapter.id] = questions.map((q, idx) => ({
-        ...q,
-        uniqueId: `ch${chapter.id}-q${idx}`,
-        chapterName: chapter.title,
-        chapter: chapter.id,
-        focus: chapter.focus || false
-      }));
-    } catch {
-      console.warn(`Could not load questions for chapter ${paddedNum}`);
-    }
-  }
-
-  globalPoolCache = pool;
-  cacheTimestamp = now;
-  return pool;
-}
+const questionFiles = {
+  '1': () => import('@/data/chapter-01-questions.json'),
+  '2': () => import('@/data/chapter-02-questions.json'),
+  '3': () => import('@/data/chapter-03-questions.json'),
+  '4': () => import('@/data/chapter-04-questions.json'),
+  '5': () => import('@/data/chapter-05-questions.json'),
+  '6': () => import('@/data/chapter-06-questions.json'),
+  '7': () => import('@/data/chapter-07-questions.json'),
+  '8': () => import('@/data/chapter-08-questions.json'),
+  '9': () => import('@/data/chapter-09-questions.json'),
+  '10': () => import('@/data/chapter-10-questions.json'),
+  '11': () => import('@/data/chapter-11-questions.json'),
+  '13': () => import('@/data/chapter-13-questions.json'),
+};
 
 export default async function FinalExamPage() {
   try {
-    const pool = await getQuestionsPool();
+    const chaptersMeta = (await import('@/data/chapters-meta.json')).default;
+    const chapters = Array.isArray(chaptersMeta) ? chaptersMeta : (chaptersMeta.chapters || []);
+    
     let finalExamSet = [];
 
-    Object.keys(pool).forEach(chId => {
-      const chQs = [...pool[chId]];
-      const shuffled = chQs.sort(() => Math.random() - 0.5);
-      const isFocus = chQs[0]?.focus;
-      const count = isFocus ? 15 : 5;
-      finalExamSet = [...finalExamSet, ...shuffled.slice(0, count)];
-    });
+    for (const chapter of chapters) {
+      if (chapter.included === false) continue;
+      const id = chapter.id.toString();
+      if (questionFiles[id]) {
+        const chQs = (await questionFiles[id]()).default;
+        const mappedQs = chQs.map((q, idx) => ({
+          ...q,
+          uniqueId: `ch${id}-q${idx}`,
+          chapterName: chapter.title,
+          chapter: chapter.id
+        }));
+        
+        const shuffled = mappedQs.sort(() => Math.random() - 0.5);
+        // Chapter 1, 5, 6 are focus (15 questions each), others are 5
+        const isFocus = [1, 5, 6].includes(chapter.id);
+        const count = isFocus ? 15 : 5;
+        finalExamSet = [...finalExamSet, ...shuffled.slice(0, count)];
+      }
+    }
 
-    // FIX #20: Limit pool sent to client — only send what's needed (already sliced above)
     const globallyShuffled = finalExamSet.sort(() => Math.random() - 0.5);
-
     return <FinalExamClient pool={globallyShuffled} />;
 
   } catch (error) {
