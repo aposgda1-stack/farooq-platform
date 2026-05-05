@@ -10,7 +10,7 @@ export default function LeaderboardPage() {
   const whatsappLink = `https://wa.me/201015960695?text=${encodeURIComponent('مرحباً 👋 وصلت من منصة الفروق الفردية، محتاج مساعدة في...')}`;
 
   useEffect(() => {
-    fetch('/api/leaderboard')
+    fetch('/api/leaderboard', { cache: 'no-store', headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' } })
       .then(res => res.json())
       .then(data => {
         setStudents(Array.isArray(data) ? data : []);
