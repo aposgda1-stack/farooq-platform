@@ -1,0 +1,145 @@
+{
+  "subject": "الفروق الفردية",
+  "totalQuestions": 80,
+  "examType": "bubble_sheet",
+  "questionTypes": ["mcq", "true_false"],
+  "chapters": [
+    {
+      "id": 1,
+      "title": "مفهوم الفروق الفردية",
+      "included": true,
+      "restrictedTopics": [
+        "مفهوم الفروق الفردية",
+        "اهتمامات علم الفروق الفردية",
+        "المنحنيات (الاعتدالي، المدبب، المفلطح، الملتوي، متعدد القمم)"
+      ],
+      "excludedTopics": [
+        "إسهامات الفلاسفة بالتفصيل",
+        "إسهامات العلماء بالتفصيل",
+        "اللمحة التاريخية المفصلة"
+      ],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    },
+    {
+      "id": 2,
+      "title": "العوامل المسهمة في الفروق الفردية (الوراثة والبيئة)",
+      "included": true,
+      "restrictedTopics": null,
+      "excludedTopics": ["أي حسابات أو قوانين رياضية"],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    },
+    {
+      "id": 3,
+      "title": "أنواع الفروق الفردية",
+      "included": true,
+      "restrictedTopics": null,
+      "excludedTopics": ["أي حسابات أو قوانين رياضية"],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    },
+    {
+      "id": 4,
+      "title": "الفروق الفردية في ضوء بعض المتغيرات النفسية والشخصية",
+      "included": true,
+      "restrictedTopics": null,
+      "excludedTopics": ["أي حسابات أو قوانين رياضية"],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    },
+    {
+      "id": 5,
+      "title": "الفروق الفردية في الذكاء الإنساني",
+      "included": true,
+      "restrictedTopics": [
+        "مفهوم الذكاء",
+        "المفهوم الإجرائي للذكاء",
+        "طبيعة الذكاء الإنساني",
+        "العلاقة بين التعلم والمخ",
+        "مبادئ التعلم القائم على وظائف المخ"
+      ],
+      "excludedTopics": [
+        "فراسة الدماغ (بالتفصيل)",
+        "نظرية التأثير الكلي",
+        "أي حسابات أو قوانين رياضية"
+      ],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    },
+    {
+      "id": 6,
+      "title": "نماذج الذكاء ونظرياته",
+      "included": true,
+      "restrictedTopics": null,
+      "excludedTopics": [
+        "آخر نظرية في الفصل",
+        "أي حسابات أو قوانين رياضية",
+        "معادلات الارتباط",
+        "الجداول الحسابية"
+      ],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    },
+    {
+      "id": 7,
+      "title": "القياس النفسي والتربوي",
+      "included": true,
+      "restrictedTopics": null,
+      "excludedTopics": ["أي حسابات أو قوانين رياضية"],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    },
+    {
+      "id": 8,
+      "title": "التقييم التربوي",
+      "included": true,
+      "restrictedTopics": null,
+      "excludedTopics": ["أي حسابات أو قوانين رياضية"],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    },
+    {
+      "id": 9,
+      "title": "الفصل التاسع",
+      "included": true,
+      "restrictedTopics": null,
+      "excludedTopics": ["أي حسابات أو قوانين رياضية"],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    },
+    {
+      "id": 10,
+      "title": "الفصل العاشر",
+      "included": true,
+      "restrictedTopics": null,
+      "excludedTopics": ["أي حسابات أو قوانين رياضية"],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    },
+    {
+      "id": 11,
+      "title": "الفصل الحادي عشر",
+      "included": true,
+      "restrictedTopics": null,
+      "excludedTopics": ["أي حسابات أو قوانين رياضية"],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    },
+    {
+      "id": 12,
+      "title": "الفصل الثاني عشر",
+      "included": false,
+      "reason": "مستبعد بأمر الدكتور - مش في المقرر"
+    },
+    {
+      "id": 13,
+      "title": "الفصل الثالث عشر",
+      "included": true,
+      "restrictedTopics": null,
+      "excludedTopics": ["أي حسابات أو قوانين رياضية"],
+      "questionsCount": 20,
+      "difficulty": { "easy": 5, "medium": 10, "hard": 5 }
+    }
+  ]
+}
