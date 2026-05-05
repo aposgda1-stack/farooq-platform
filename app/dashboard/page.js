@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useUserStats, BADGES } from '@/lib/useUserStats';
-import { useUser } from '@clerk/nextjs';
+import { useUser, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 
 export default function Dashboard() {
   const { user } = useUser();
@@ -35,17 +35,21 @@ export default function Dashboard() {
       {/* Header */}
       <header className="fixed top-0 z-50 w-full bg-background/80 backdrop-blur-xl border-b border-primary/10">
         <div className="flex flex-row-reverse justify-between items-center px-5 h-16 max-w-3xl mx-auto">
-          {/* User info */}
           <div className="flex items-center gap-3">
-            <div className="relative">
-              <img
-                src={user?.imageUrl || "https://api.dicebear.com/7.x/avataaars/svg?seed=student"}
-                alt="Profile"
-                className="w-9 h-9 rounded-2xl border-2 border-primary/30 object-cover bg-primary/10"
-              />
-              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-success border-2 border-background rounded-full" />
+            <div className="flex items-center gap-2">
+              <SignedOut>
+                <SignInButton mode="modal" fallbackRedirectUrl="/dashboard">
+                  <button className="flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/30 font-bold text-xs px-3 py-1.5 rounded-full hover:bg-primary/20 transition-all">
+                    <span className="material-symbols-outlined text-sm">login</span>
+                    دخول
+                  </button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton appearance={{ elements: { avatarBox: "w-9 h-9 border-2 border-primary/30 rounded-2xl" } }} />
+              </SignedIn>
             </div>
-            <div className="leading-none">
+            <div className="leading-none text-right">
               <p className="font-bold text-sm text-on-background">أهلاً {user?.firstName || 'يا بطل'} 🎓</p>
               <p className="text-[10px] text-on-surface-variant mt-1">جاهز تلم المنهج؟</p>
             </div>

@@ -23,7 +23,23 @@ export default async function Chapters() {
 
       <main className="pt-24 px-5 max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1 className="font-lexend font-black text-2xl text-on-background mb-1">الفصول الدراسية</h1>
+          <h1 className="font-lexend font-black text-2xl text-on-background mb-3">الفصول الدراسية</h1>
+          <div className="bg-primary/10 border border-primary/20 rounded-2xl p-4 mb-4">
+            <h3 className="font-bold text-primary mb-2 flex items-center gap-2">
+              <span className="material-symbols-outlined text-sm icon-filled">info</span>
+              إيه الفرق بين التدريب والامتحان؟
+            </h3>
+            <ul className="text-sm text-on-surface-variant space-y-2">
+              <li className="flex gap-2">
+                <span className="material-symbols-outlined text-success text-base">check_circle</span>
+                <p><strong>التدريب:</strong> بتعرف الإجابة الصح فوراً بعد كل سؤال، مع التفسير العلمي. (بدون وقت)</p>
+              </li>
+              <li className="flex gap-2">
+                <span className="material-symbols-outlined text-error text-base">timer</span>
+                <p><strong>الامتحان:</strong> محاكاة للامتحان الحقيقي بوقت محدد. النتيجة في النهاية بناءً على أدائك.</p>
+              </li>
+            </ul>
+          </div>
           <p className="text-on-surface-variant text-sm">اختار الفصل وابدأ التدريب أو الامتحان</p>
         </div>
 

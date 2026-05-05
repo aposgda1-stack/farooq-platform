@@ -1,5 +1,6 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
+import WelcomeModal from './components/WelcomeModal'
 
 export const metadata = {
   title: 'منصة فروق فردية | Farooq Platform',
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
           <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
         </head>
         <body className="bg-background text-on-background font-body-base text-body-base min-h-screen relative overflow-x-hidden selection:bg-primary-container selection:text-primary antialiased">
+          <WelcomeModal />
           {children}
         </body>
       </html>

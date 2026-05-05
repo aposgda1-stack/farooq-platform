@@ -1,4 +1,6 @@
+'use client';
 import Link from 'next/link';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 
 export default function LandingPage() {
   const whatsappNumber = '201015960695';
@@ -22,14 +24,27 @@ export default function LandingPage() {
               <p className="font-lexend font-black text-base tracking-tight ruby-gradient">الفروق الفردية</p>
             </div>
           </div>
-          {/* CTA */}
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-2 bg-primary text-white font-bold text-sm px-5 py-2.5 rounded-full shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105 transition-all duration-200"
-          >
-            <span className="material-symbols-outlined text-base icon-filled">school</span>
-            ابدأ الآن
-          </Link>
+          {/* Auth + CTA */}
+          <div className="flex items-center gap-3">
+            <SignedOut>
+              <SignInButton mode="modal" fallbackRedirectUrl="/dashboard">
+                <button className="flex items-center gap-1.5 text-primary border border-primary/30 font-bold text-sm px-4 py-2 rounded-full hover:bg-primary/10 transition-all duration-200">
+                  <span className="material-symbols-outlined text-base">login</span>
+                  دخول
+                </button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton appearance={{ elements: { avatarBox: 'w-8 h-8' } }} />
+            </SignedIn>
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-2 bg-primary text-white font-bold text-sm px-5 py-2.5 rounded-full shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105 transition-all duration-200"
+            >
+              <span className="material-symbols-outlined text-base icon-filled">school</span>
+              ابدأ الآن
+            </Link>
+          </div>
         </div>
       </nav>
 
