@@ -61,17 +61,13 @@ export default function WelcomeModal() {
           </div>
 
           {/* Heading */}
-          <div className="relative z-10 mb-5 text-right">
-            <h2 className="text-[1.75rem] font-black text-white tracking-tight leading-tight mb-3">
-              يا صديقي.. 👋<br />
-              <span className="ruby-gradient">نورت المنصة!</span>
+          <div className="relative z-10 mb-5 text-left" dir="ltr">
+            <h2 className="text-[1.75rem] font-black text-white tracking-tight leading-tight mb-3 font-lexend">
+              Welcome to the Platform! 👋<br />
+              <span className="ruby-gradient">Seniors 2026</span>
             </h2>
-            <p className="text-white/60 text-sm leading-relaxed font-medium">
-              ده آخر ترم في مسيرتنا التعليمية مع بعض.
-              سجّل دخولك عشان{' '}
-              <strong className="text-white">تحفظ تقدمك</strong>{' '}
-              وتظهر في لوحة المتفوقين، ونكمل الرحلة دي{' '}
-              <strong className="ruby-gradient">مع بعض.</strong>
+            <p className="text-white/60 text-sm leading-relaxed font-medium font-lexend">
+              This is our final semester together. Sign in to save your progress, secure your spot on the leaderboard, and let's finish this journey strong <strong className="ruby-gradient">together.</strong>
             </p>
           </div>
 

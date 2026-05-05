@@ -66,16 +66,16 @@ export default function LandingPage() {
         </h1>
 
         {/* Personal message from Ruby */}
-        <div className="glass-card rounded-3xl p-6 mb-8 text-right space-y-3">
+        <div className="glass-card rounded-3xl p-6 mb-8 text-left space-y-3" dir="ltr">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-xl">🎓</span>
-            <span className="font-lexend font-bold text-primary text-sm">رسالة من زميلكم</span>
+            <span className="font-lexend font-bold text-primary text-sm">A Message From Your Colleague</span>
           </div>
-          <p className="text-on-surface leading-relaxed text-sm sm:text-base">
-            ده آخر ترم في مسيرتنا التعليمية مع بعض، وأنا فخور بيكم جداً. اتمنى من قلبي إن كل واحد فيكم يوصل لأحلامه ويحقق اللي بيتمناه.
+          <p className="text-on-surface leading-relaxed text-sm sm:text-base font-lexend">
+            This is our final semester together, and I am incredibly proud of us. I truly hope each of you reaches your dreams and achieves what you aspire to.
           </p>
-          <p className="text-on-surface-variant leading-relaxed text-sm">
-            المنصة دي مجهود تطوعي خالص (مجانية 100%)، هدفها مساعدة زملائي ع المذاكرة وتشجيعهم على التقدم في مسيرتهم التعليمية.
+          <p className="text-on-surface-variant leading-relaxed text-sm font-lexend">
+            This platform is a 100% free volunteer effort, designed to help my colleagues study, practice effectively, and encourage academic excellence.
           </p>
 
           {/* Disclaimer badge */}
