@@ -18,8 +18,8 @@ export default function LandingPage() {
           <div className="flex items-center gap-2.5">
             <span className="text-2xl">🌹</span>
             <div className="leading-none">
-              <p className="font-lexend font-black text-base tracking-tight ruby-gradient">Summarized</p>
-              <p className="font-lexend font-black text-base tracking-tight ruby-gradient">by Ruby</p>
+              <p className="font-lexend font-black text-base tracking-tight ruby-gradient">منصة</p>
+              <p className="font-lexend font-black text-base tracking-tight ruby-gradient">الفروق الفردية</p>
             </div>
           </div>
           {/* CTA */}
@@ -44,9 +44,9 @@ export default function LandingPage() {
 
         {/* Heading */}
         <h1 className="font-lexend font-black text-4xl sm:text-5xl leading-tight text-on-background mb-5">
-          <span className="ruby-gradient">Summarized</span>
+          <span className="ruby-gradient">منصة</span>
           <br />
-          <span className="ruby-gradient">by Ruby</span>
+          <span className="ruby-gradient">الفروق الفردية</span>
         </h1>
 
         {/* Personal message from Ruby */}
@@ -129,7 +129,7 @@ export default function LandingPage() {
           {/* Brand */}
           <div className="flex items-center gap-2">
             <span className="text-xl">🌹</span>
-            <span className="font-lexend font-black text-base ruby-gradient">Summarized by Ruby</span>
+            <span className="font-lexend font-black text-base ruby-gradient">منصة الفروق الفردية</span>
           </div>
 
           {/* Disclaimer text */}
@@ -153,7 +153,7 @@ export default function LandingPage() {
 
           {/* Copyright */}
           <p className="text-on-surface-variant/50 text-xs">
-            Summarized by Ruby · Seniors 2026
+            منصة الفروق الفردية · Seniors 2026
           </p>
         </div>
       </footer>

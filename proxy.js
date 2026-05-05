@@ -1,6 +1,6 @@
-export default function middleware(req) {
-  // Authentication removed, open platform
-}
+import { clerkMiddleware } from '@clerk/nextjs/server';
+
+export default clerkMiddleware();
 
 export const config = {
   matcher: [

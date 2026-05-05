@@ -1,25 +1,21 @@
-import clientPromise from "@/lib/mongodb";
+import dbConnect from "@/lib/mongodb";
+import { UserProgress } from "@/lib/models";
 import { NextResponse } from "next/server";
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const client = await clientPromise;
-    const db = client.db("farooq_platform");
-    const collection = db.collection("user_progress");
+    await dbConnect();
 
-    // FIX: Sort by totalPoints (effort/loyalty) instead of just last score
-    // This makes the leaderboard much more logical and rewarding
-    const topStudents = await collection
-      .find({ totalPoints: { $exists: true } })
+    const topStudents = await UserProgress.find({ totalPoints: { $exists: true } })
       .sort({ totalPoints: -1 })
       .limit(20)
-      .toArray();
+      .lean();
 
     return NextResponse.json(topStudents);
   } catch (e) {
-    console.error(e);
+    console.error("Leaderboard Error:", e);
     return NextResponse.json({ error: "Failed to fetch leaderboard" }, { status: 500 });
   }
 }

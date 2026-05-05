@@ -1,8 +1,8 @@
 import Link from 'next/link';
+import { getChaptersMeta } from '@/lib/contentService';
 
 export default async function Chapters() {
-  const parsedData = (await import('@/data/chapters-meta.json')).default;
-  const chapters = Array.isArray(parsedData) ? parsedData : (parsedData.chapters || []);
+  const chapters = await getChaptersMeta();
   const activeChapters = chapters.filter(c => c.included !== false);
 
   return (
@@ -12,7 +12,7 @@ export default async function Chapters() {
         <div className="flex flex-row-reverse justify-between items-center px-5 h-16 max-w-3xl mx-auto">
           <div className="flex items-center gap-2">
             <span className="text-lg">🌹</span>
-            <span className="font-lexend font-black text-sm ruby-gradient">Summarized by Ruby</span>
+            <span className="font-lexend font-black text-sm ruby-gradient">منصة الفروق الفردية</span>
           </div>
           <Link href="/dashboard" className="flex items-center gap-1.5 text-on-surface-variant hover:text-on-background transition-colors text-sm">
             <span className="material-symbols-outlined text-base">home</span>
@@ -49,7 +49,7 @@ export default async function Chapters() {
                 <h2 className="font-bold text-on-background text-base leading-snug mb-1">{chapter.title}</h2>
                 <div className="flex items-center gap-1.5 text-on-surface-variant text-xs">
                   <span className="material-symbols-outlined text-sm">help_outline</span>
-                  <span>{chapter.totalQuestions} سؤال</span>
+                  <span>{chapter.questionsCount || 0} سؤال</span>
                 </div>
               </div>
 

@@ -31,7 +31,7 @@ export default function LeaderboardPage() {
         <div className="flex flex-row-reverse justify-between items-center px-5 h-16 max-w-3xl mx-auto">
           <div className="flex items-center gap-2">
             <span>🌹</span>
-            <span className="font-lexend font-black text-sm ruby-gradient">Summarized by Ruby</span>
+            <span className="font-lexend font-black text-sm ruby-gradient">منصة الفروق الفردية</span>
           </div>
           <h1 className="font-bold text-on-background flex items-center gap-2">
             <span className="material-symbols-outlined text-primary icon-filled">emoji_events</span>

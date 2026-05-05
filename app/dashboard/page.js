@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useUserStats, BADGES } from '@/lib/useUserStats';
+import { useUser } from '@clerk/nextjs';
 
 export default function Dashboard() {
+  const { user } = useUser();
   const { stats, isLoaded: isStatsLoaded } = useUserStats();
   const [topStudents, setTopStudents] = useState([]);
 
@@ -37,21 +39,21 @@ export default function Dashboard() {
           <div className="flex items-center gap-3">
             <div className="relative">
               <img
-                src="https://api.dicebear.com/7.x/avataaars/svg?seed=student"
+                src={user?.imageUrl || "https://api.dicebear.com/7.x/avataaars/svg?seed=student"}
                 alt="Profile"
                 className="w-9 h-9 rounded-2xl border-2 border-primary/30 object-cover bg-primary/10"
               />
               <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-success border-2 border-background rounded-full" />
             </div>
             <div className="leading-none">
-              <p className="font-bold text-sm text-on-background">أهلاً يا بطل 🎓</p>
+              <p className="font-bold text-sm text-on-background">أهلاً {user?.firstName || 'يا بطل'} 🎓</p>
               <p className="text-[10px] text-on-surface-variant mt-1">جاهز تلم المنهج؟</p>
             </div>
           </div>
           {/* Brand */}
           <div className="flex items-center gap-1.5">
             <span className="text-base">🌹</span>
-            <span className="font-lexend font-black text-xs ruby-gradient">Summarized by Ruby</span>
+            <span className="font-lexend font-black text-xs ruby-gradient">منصة الفروق الفردية</span>
           </div>
         </div>
       </header>
@@ -152,7 +154,7 @@ export default function Dashboard() {
         </a>
 
         <p className="text-center text-on-surface-variant/40 text-xs pb-2">
-          Summarized by Ruby · Seniors 2026 · منصة تطوعية غير ربحية
+          منصة الفروق الفردية · Seniors 2026 · منصة تطوعية غير ربحية
         </p>
       </main>
 

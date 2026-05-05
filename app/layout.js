@@ -1,9 +1,9 @@
-import './globals.css'
+import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 
 export const metadata = {
-  title: 'Summarized by Ruby | منصة فروق فردية',
-  description: 'منصة Summarized by Ruby التعليمية — ملخصات احترافية وأسئلة تفاعلية لمساعدتك على التفوق في الفروق الفردية.',
+  title: 'منصة فروق فردية | Farooq Platform',
+  description: 'منصة فروق فردية التعليمية — ملخصات احترافية وأسئلة تفاعلية لمساعدتك على التفوق.',
   manifest: '/manifest.json',
 }
 
@@ -17,7 +17,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <>
+    <ClerkProvider>
       <html lang="ar" dir="rtl" className="dark">
         <head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,6 +29,6 @@ export default function RootLayout({ children }) {
           {children}
         </body>
       </html>
-    </>
+    </ClerkProvider>
   )
 }
