@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export default async function Chapters() {
-  const parsedData = (await import('@/public/data/chapters-meta.json')).default;
+  const parsedData = (await import('@/data/chapters-meta.json')).default;
   const chapters = Array.isArray(parsedData) ? parsedData : (parsedData.chapters || []);
   const activeChapters = chapters.filter(c => c.included !== false);
 

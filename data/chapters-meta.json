@@ -1,0 +1,85 @@
+{
+  "subject": "الفروق الفردية",
+  "totalQuestions": 80,
+  "examType": "bubble_sheet",
+  "questionTypes": ["mcq", "true_false"],
+  "chapters": [
+    {
+      "id": 1,
+      "title": "الفصل الأول: مفهوم الفروق الفردية",
+      "included": true,
+      "questionsCount": 20
+    },
+    {
+      "id": 2,
+      "title": "الفصل الثاني: العوامل المسهمة في الفروق الفردية",
+      "included": true,
+      "questionsCount": 20
+    },
+    {
+      "id": 3,
+      "title": "الفصل الثالث: أنواع الفروق الفردية والفروق بين الجنسين",
+      "included": true,
+      "questionsCount": 20
+    },
+    {
+      "id": 4,
+      "title": "الفصل الرابع: الفروق الفردية في ضوء المتغيرات النفسية",
+      "included": true,
+      "questionsCount": 20
+    },
+    {
+      "id": 5,
+      "title": "الفصل الخامس: الفروق الفردية في الذكاء الإنساني ووظائف المخ",
+      "included": true,
+      "questionsCount": 20
+    },
+    {
+      "id": 6,
+      "title": "الفصل السادس: النظريات المفسرة للنشاط العقلي",
+      "included": true,
+      "questionsCount": 20
+    },
+    {
+      "id": 7,
+      "title": "الفصل السابع: القياس النفسي والتربوي",
+      "included": true,
+      "questionsCount": 20
+    },
+    {
+      "id": 8,
+      "title": "الفصل الثامن: التقويم التربوي",
+      "included": true,
+      "questionsCount": 20
+    },
+    {
+      "id": 9,
+      "title": "الفصل التاسع: الاختبارات النفسية",
+      "included": true,
+      "questionsCount": 20
+    },
+    {
+      "id": 10,
+      "title": "الفصل العاشر: ثبات الاختبارات",
+      "included": true,
+      "questionsCount": 20
+    },
+    {
+      "id": 11,
+      "title": "الفصل الحادي عشر: صدق الاختبارات",
+      "included": true,
+      "questionsCount": 20
+    },
+    {
+      "id": 12,
+      "title": "الفصل الثاني عشر (ملغي)",
+      "included": false
+    },
+    {
+      "id": 13,
+      "title": "الفصل الثالث عشر: الاختبارات التحصيلية",
+      "included": true,
+      "questionsCount": 20
+    }
+  ]
+}

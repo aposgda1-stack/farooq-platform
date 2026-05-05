@@ -3,18 +3,18 @@ import Link from 'next/link';
 
 // Static mapping for Vercel bundling
 const questionFiles = {
-  '1': () => import('@/public/data/chapter-01-questions.json'),
-  '2': () => import('@/public/data/chapter-02-questions.json'),
-  '3': () => import('@/public/data/chapter-03-questions.json'),
-  '4': () => import('@/public/data/chapter-04-questions.json'),
-  '5': () => import('@/public/data/chapter-05-questions.json'),
-  '6': () => import('@/public/data/chapter-06-questions.json'),
-  '7': () => import('@/public/data/chapter-07-questions.json'),
-  '8': () => import('@/public/data/chapter-08-questions.json'),
-  '9': () => import('@/public/data/chapter-09-questions.json'),
-  '10': () => import('@/public/data/chapter-10-questions.json'),
-  '11': () => import('@/public/data/chapter-11-questions.json'),
-  '13': () => import('@/public/data/chapter-13-questions.json'),
+  '1': () => import('@/data/chapter-01-questions.json'),
+  '2': () => import('@/data/chapter-02-questions.json'),
+  '3': () => import('@/data/chapter-03-questions.json'),
+  '4': () => import('@/data/chapter-04-questions.json'),
+  '5': () => import('@/data/chapter-05-questions.json'),
+  '6': () => import('@/data/chapter-06-questions.json'),
+  '7': () => import('@/data/chapter-07-questions.json'),
+  '8': () => import('@/data/chapter-08-questions.json'),
+  '9': () => import('@/data/chapter-09-questions.json'),
+  '10': () => import('@/data/chapter-10-questions.json'),
+  '11': () => import('@/data/chapter-11-questions.json'),
+  '13': () => import('@/data/chapter-13-questions.json'),
 };
 
 export default async function QuizPage({ params, searchParams }) {
@@ -22,7 +22,7 @@ export default async function QuizPage({ params, searchParams }) {
   const mode = searchParams.mode || 'practice';
 
   try {
-    const metaContents = (await import('@/public/data/chapters-meta.json')).default;
+    const metaContents = (await import('@/data/chapters-meta.json')).default;
     const chapters = Array.isArray(metaContents) ? metaContents : (metaContents.chapters || []);
     const chapterMeta = chapters.find(c => c.id.toString() === chapterId.toString());
 
