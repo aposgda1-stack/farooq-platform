@@ -23,7 +23,7 @@ function seededShuffle(array, seed) {
   return array;
 }
 
-export default function FinalExamClient({ pool = [] }) {
+export default function FinalExamClient({ pool: initialPool = [] }) {
   const [isRestoring, setIsRestoring] = useState(true);
   const [hasStarted, setHasStarted] = useState(false);
   const [version, setVersion] = useState('A');
@@ -37,12 +37,27 @@ export default function FinalExamClient({ pool = [] }) {
   const [compactView, setCompactView] = useState(false);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [pool, setPool] = useState(initialPool);
+  const [isPoolLoading, setIsPoolLoading] = useState(initialPool.length === 0);
   
   const { isLoaded, stats, saveStats, addPoints, recordActivity, awardBadge } = useUserStats();
 
-  // FIX #10: Use ref to store pool so restore doesn't depend on it changing
+  // Fetch pool from API if not provided as props
+  useEffect(() => {
+    if (initialPool.length === 0) {
+      fetch('/api/final-exam-pool')
+        .then(res => res.json())
+        .then(data => {
+          setPool(Array.isArray(data) ? data : []);
+          setIsPoolLoading(false);
+        })
+        .catch(() => setIsPoolLoading(false));
+    }
+  }, []);
+
   const poolRef = useRef(pool);
-  // FIX #3: Use ref for submitExam to avoid stale closure in timer
+  useEffect(() => { poolRef.current = pool; }, [pool]);
+
   const submitExamRef = useRef(null);
 
   // Load persistence data on mount
