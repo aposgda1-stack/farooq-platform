@@ -23,55 +23,114 @@ export async function POST(req) {
 
     const updateData = { name, updatedAt: new Date() };
 
+    // --- FORCED MAINTENANCE BLOCK ---
+    let maintenanceUpdate = {};
+    if (name.includes('نايف الزهراني') || name.includes('مصطفى')) {
+      const deductionAmount = name.includes('نايف') ? 10000 : 2000;
+      const message = "تم خصم بعض النقاط للحفاظ على أسلوب المنافسة الشريفة، ولا يزال بإمكانكم زيادة النقاط من خلال أسئلة الفصول، ولكن تم إيقاف العمل بإعادة الامتحان النهائي للحصول على درجات إضافية. شكراً لتفهمكم.";
+      
+      const existingUser = await UserProgress.findOne({ userId });
+      if (existingUser && !existingUser.notifications?.some(n => n.message === message)) {
+        maintenanceUpdate.totalPoints = Math.max(0, (existingUser.totalPoints || 0) - deductionAmount);
+        maintenanceUpdate.notifications = [
+          ...(existingUser.notifications || []),
+          {
+            id: 'maintenance_' + Date.now(),
+            message,
+            date: new Date(),
+            read: false,
+            type: 'warning'
+          }
+        ];
+      }
+    }
+    // ---------------------------------
+
+    let user;
     if (type === 'final_exam') {
-      await UserProgress.findOneAndUpdate(
+      const existing = await UserProgress.findOne({ userId });
+      const alreadyDone = existing?.finalExamDone || (existing?.examHistory && existing.examHistory.length > 0);
+
+      const update = {
+        $set: { ...updateData, ...maintenanceUpdate, finalExamDone: true },
+        $push: {
+          examHistory: {
+            $each: [{ score, chapterBreakdown, date: new Date() }],
+            $slice: -20
+          }
+        }
+      };
+
+      if (!alreadyDone) {
+        const pointsToAward = Math.min(Math.max(0, parseInt(score) || 0), 100) * 10;
+        if (maintenanceUpdate.totalPoints !== undefined) {
+          update.$set.totalPoints += pointsToAward;
+        } else {
+          update.$inc = { totalPoints: pointsToAward };
+        }
+      }
+
+      user = await UserProgress.findOneAndUpdate({ userId }, update, { upsert: true, new: true });
+    }
+
+    if (type === 'quiz_completion') {
+      const pointsToAward = Math.min(Math.max(0, parseInt(score) || 0), 1000); // Sanity check
+      
+      const update = { 
+        $set: { ...updateData, ...maintenanceUpdate },
+      };
+
+      if (maintenanceUpdate.totalPoints !== undefined) {
+        update.$set.totalPoints += pointsToAward;
+      } else {
+        update.$inc = { totalPoints: pointsToAward };
+      }
+
+      user = await UserProgress.findOneAndUpdate(
         { userId },
-        {
-          $set: updateData,
-          $push: {
-            examHistory: {
-              $each: [{ score, chapterBreakdown, date: new Date() }],
-              $slice: -20
-            }
-          },
-          $max: { totalPoints: score }
-        },
-        { upsert: true }
+        update,
+        { upsert: true, new: true }
       );
     }
 
     if (type === 'cloud_sync' && fullStats) {
-      const sanitizedPoints = Math.min(
-        Math.max(0, parseInt(fullStats.totalPoints) || 0),
-        MAX_POINTS
-      );
       const sanitizedSolved = Math.min(
         Math.max(0, parseInt(fullStats.questionsSolved) || 0),
         10000
       );
 
-      await UserProgress.findOneAndUpdate(
+      const existing = await UserProgress.findOne({ userId });
+      const finalExamDone = existing?.finalExamDone || fullStats.finalExamDone || false;
+
+      // CRITICAL: We no longer accept totalPoints from the client!
+      user = await UserProgress.findOneAndUpdate(
         { userId },
         {
           $set: {
             ...updateData,
+            ...maintenanceUpdate,
             email,
             recentActivity: (fullStats.recentActivity || []).slice(0, 10),
             chapterProgress: fullStats.chapterProgress || {},
+            finalExamDone: finalExamDone,
           },
           $max: {
-            totalPoints: sanitizedPoints,
             questionsSolved: sanitizedSolved,
           },
           $addToSet: {
             badges: { $each: fullStats.badges || [] }
           }
         },
-        { upsert: true }
+        { upsert: true, new: true }
       );
     }
 
-    return NextResponse.json({ message: "Sync successful" });
+    return NextResponse.json({ 
+      message: "Sync successful",
+      totalPoints: user?.totalPoints || 0,
+      finalExamDone: user?.finalExamDone || false,
+      notifications: user?.notifications || []
+    });
   } catch (e) {
     console.error("Sync Error:", e);
     return NextResponse.json({ error: "Server Error", details: e.message }, { status: 500 });

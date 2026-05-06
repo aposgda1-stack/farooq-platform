@@ -69,6 +69,28 @@ export default function Dashboard() {
 
       <main className="pt-24 px-5 max-w-3xl mx-auto space-y-6 relative z-10">
 
+        {/* Notifications Section */}
+        {stats?.notifications?.length > 0 && (
+          <div className="space-y-3">
+            {stats.notifications.filter(n => !n.read).map((n, i) => (
+              <div key={n.id || i} className={`relative overflow-hidden p-5 rounded-[28px] border-2 transition-all ${n.type === 'warning' ? 'bg-error/5 border-error/20 text-error' : 'bg-primary/5 border-primary/20 text-primary'}`}>
+                <div className="flex gap-4">
+                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 ${n.type === 'warning' ? 'bg-error/10' : 'bg-primary/10'}`}>
+                    <span className="material-symbols-outlined icon-filled text-xl">{n.type === 'warning' ? 'warning' : 'notifications'}</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs font-black mb-1 flex items-center justify-between">
+                      {n.type === 'warning' ? 'تنبيه هام' : 'رسالة جديدة'}
+                      <span className="opacity-50 font-normal">{new Date(n.date).toLocaleDateString('ar-EG')}</span>
+                    </p>
+                    <p className="text-sm font-medium leading-relaxed text-on-background opacity-90">{n.message}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Score hero */}
         <div className="glass-card rounded-3xl p-6 flex items-center gap-5">
           <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center shrink-0">

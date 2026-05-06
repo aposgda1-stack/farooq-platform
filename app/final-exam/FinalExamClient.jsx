@@ -38,7 +38,7 @@ export default function FinalExamClient({ pool = [] }) {
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   
-  const { isLoaded, addPoints, recordActivity, awardBadge } = useUserStats();
+  const { isLoaded, stats, saveStats, addPoints, recordActivity, awardBadge } = useUserStats();
 
   // FIX #10: Use ref to store pool so restore doesn't depend on it changing
   const poolRef = useRef(pool);
@@ -202,7 +202,6 @@ export default function FinalExamClient({ pool = [] }) {
     syncToMongo(resObj);
 
     if (isLoaded) {
-      addPoints(finalScore * 10);
       recordActivity({
         title: `الامتحان النهائي (نموذج ${version})`,
         date: new Date().toISOString(),
