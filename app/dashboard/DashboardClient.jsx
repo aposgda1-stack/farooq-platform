@@ -7,8 +7,8 @@ import { BADGES } from '@/lib/badges';
 import { useUser, SignInButton, UserButton } from '@clerk/nextjs';
 
 export default function DashboardClient() {
-  const { user, isSignedIn, isLoaded: isAuthLoaded } = useUser();
-  const { stats, isLoaded: isStatsLoaded } = useUserStats();
+  const { user: clerkUser, isSignedIn, isLoaded: isAuthLoaded } = useUser();
+  const { activeUser, stats, isLoaded: isStatsLoaded } = useUserStats();
   const [topStudents, setTopStudents] = useState([]);
 
   const whatsappLink = `https://wa.me/201015960695?text=${encodeURIComponent('مرحباً 👋 وصلت من منصة الفروق الفردية، محتاج مساعدة في...')}`;
@@ -19,6 +19,11 @@ export default function DashboardClient() {
       .then(data => setTopStudents(Array.isArray(data) ? data.slice(0, 5) : []))
       .catch(() => {});
   }, []);
+
+  const handleCustomLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    window.location.href = '/';
+  };
 
   if (!isStatsLoaded || !isAuthLoaded) return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4">
@@ -38,21 +43,24 @@ export default function DashboardClient() {
         <div className="flex flex-row-reverse justify-between items-center px-5 h-16 max-w-3xl mx-auto">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              {!isSignedIn && (
-                <SignInButton fallbackRedirectUrl="/dashboard">
-                  <button className="flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/30 font-bold text-xs px-3 py-1.5 rounded-full hover:bg-primary/20 transition-all">
-                    <span className="material-symbols-outlined text-sm">login</span>
-                    دخول
-                  </button>
-                </SignInButton>
+              {!activeUser && (
+                <Link href="/auth/login" className="flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/30 font-bold text-xs px-3 py-1.5 rounded-full hover:bg-primary/20 transition-all">
+                  <span className="material-symbols-outlined text-sm">login</span>
+                  دخول
+                </Link>
               )}
-              {isSignedIn && (
+              {activeUser?.source === 'clerk' && (
                 <UserButton appearance={{ elements: { avatarBox: "w-9 h-9 border-2 border-primary/30 rounded-2xl" } }} />
+              )}
+              {activeUser?.source === 'custom' && (
+                <button onClick={handleCustomLogout} className="w-9 h-9 flex items-center justify-center bg-surface-variant/50 border-2 border-primary/30 rounded-2xl text-error hover:bg-error/10 transition-colors">
+                  <span className="material-symbols-outlined text-sm">logout</span>
+                </button>
               )}
             </div>
             <div className="leading-none text-right">
-              <p className="font-bold text-sm text-on-background">أهلاً {user?.firstName || 'يا بطل'} 🎓</p>
-              {isSignedIn && stats && (
+              <p className="font-bold text-sm text-on-background">أهلاً {activeUser?.name?.split(' ')[0] || 'يا بطل'} 🎓</p>
+              {activeUser && stats && (
                 <p className="text-xs font-bold text-primary mt-1">{stats.totalPoints} <span className="text-[10px] text-on-surface-variant font-normal">نقطة</span></p>
               )}
             </div>

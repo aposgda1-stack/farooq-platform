@@ -70,10 +70,19 @@ export default function SignInPage() {
             />
           </div>
 
-          <Link href="/" className="mt-8 text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 text-sm font-bold">
-            العودة للرئيسية
-            <span className="material-symbols-outlined text-base">arrow_back</span>
-          </Link>
+          <div className="mt-8 flex flex-col items-center gap-4">
+            <div className="p-4 rounded-2xl bg-error/5 border border-error/20 text-center w-full max-w-sm">
+              <p className="text-xs font-bold text-error mb-2">هل واجهت مشكلة في الدخول؟ (العدد اكتمل)</p>
+              <Link href="/auth/register" className="inline-block px-4 py-2 bg-background border border-primary/30 text-primary rounded-xl text-sm font-bold hover:bg-primary/5 transition-colors">
+                سجل بالطريقة التقليدية
+              </Link>
+            </div>
+
+            <Link href="/" className="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 text-sm font-bold">
+              العودة للرئيسية
+              <span className="material-symbols-outlined text-base">arrow_back</span>
+            </Link>
+          </div>
         </div>
 
       </div>
