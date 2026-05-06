@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useUserStats, BADGES } from '@/lib/useUserStats';
+import { useUserStats } from '@/lib/useUserStats';
+import { BADGES } from '@/lib/badges';
 
 export const dynamic = "force-dynamic";
 
