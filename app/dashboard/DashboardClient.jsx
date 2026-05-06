@@ -115,6 +115,47 @@ export default function DashboardClient() {
           </Link>
         </div>
 
+        {/* Top students mini */}
+        {topStudents.length > 0 && (
+          <div className="glass-card rounded-2xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <Link href="/leaderboard" className="text-primary text-xs font-bold hover:underline">عرض الكل</Link>
+              <h2 className="font-bold text-on-background flex items-center gap-2">
+                <span className="material-symbols-outlined text-tertiary text-lg icon-filled">trophy</span>
+                المتصدرون
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {topStudents.map((s, i) => (
+                <div key={i} className={`flex items-center gap-3 p-3 rounded-xl bg-surface-container/50`}>
+                  <span className="text-lg w-6 text-center shrink-0">
+                    {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i+1}`}
+                  </span>
+                  <p className="flex-1 font-bold text-on-background text-sm truncate">{s.name}</p>
+                  <p className="font-black text-primary text-sm">{s.totalPoints || 0}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Badges */}
+        {stats?.badges?.length > 0 && (
+          <div className="glass-card rounded-2xl p-5">
+            <h2 className="font-bold text-on-background mb-4 flex items-center gap-2">
+              <span className="material-symbols-outlined text-primary icon-filled">military_tech</span>
+              أوسمتك
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {stats.badges.map((b, i) => (
+                <div key={i} className="px-3 py-1.5 rounded-full bg-primary/15 border border-primary/30 text-primary text-xs font-bold">
+                  {b}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl font-bold text-sm text-white shadow-lg" style={{ background: 'linear-gradient(135deg, #25d366, #128c7e)' }}>
           واجهت مشكلة؟ تواصل على واتساب
         </a>
