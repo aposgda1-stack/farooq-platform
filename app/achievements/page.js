@@ -3,13 +3,15 @@
 import Link from 'next/link';
 import { useUserStats, BADGES } from '@/lib/useUserStats';
 
+export const dynamic = "force-dynamic";
+
 export default function AchievementsPage() {
   const { stats, isLoaded } = useUserStats();
 
   if (!isLoaded) return <div className="text-center mt-20">جاري التحميل...</div>;
 
   const userBadges = stats.badges || [];
-  const allBadges = Object.values(BADGES);
+  const allBadges = BADGES ? Object.values(BADGES) : [];
 
   return (
     <div className="pb-24 min-h-screen bg-background text-on-background font-body-base">
